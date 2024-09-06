@@ -4,6 +4,11 @@
 
 Esta é uma aplicação Java que permite pesquisar termos específicos em arquivos de texto descompactados a partir de um arquivo ZIP. A aplicação descompacta o arquivo ZIP contendo arquivos de texto e realiza uma busca nos arquivos para encontrar ocorrências do termo fornecido.
 
+## Observações
+
+Apagar a pasta 'data' na raiz do projeto, caso exista, ela é criada quando o app extrai os arquivos de movies.zip. Quando ela existe, a função unzip não é mais chamada.
+Foi optado em não gerar um 'jar' do projeto, para que em tempo de execução se possa ver a aplicação extraindo os dados do arquivo .zip.
+
 ## Requisitos
 
 - Java 11 ou superior
