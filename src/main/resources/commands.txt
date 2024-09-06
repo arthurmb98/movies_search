@@ -1,8 +1,0 @@
-Para compilar o projeto:
-
-javac -d target/classes src/main/java/org/luiza_labs/movies_search/*.java
-
-Comando para executar o programa:
-
-java -cp target/classes org.luiza_labs.movies_search.MoviesSearchApp "zuckerman"
-
