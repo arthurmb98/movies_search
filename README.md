@@ -47,5 +47,10 @@ Para executar os testes (se configurados), use o comando Maven:
 ```
 Certifique-se de que o Maven está instalado e configurado no seu ambiente para executar este comando.
 
+## Problemas Conhecidos
 
+Problema com a configuração do PrintStream: Se você encontrar problemas relacionados ao encoding dos caracteres, verifique se o seu terminal ou IDE está configurado para usar UTF-8.
 
+## Licença
+
+Este projeto está licenciado sob a Licença ORACLE JAVA.
