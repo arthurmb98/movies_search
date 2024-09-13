@@ -115,7 +115,7 @@ public class FileService {
             resultSet.stream()
                     .map(fileModelMap::get)
                     .sorted(Comparator.comparing(FileModel::getNameFile))
-                    .forEach(fileModel -> System.out.println(fileModel.getNameFile()));
+                    .forEach(fileModel -> System.out.println(DATA_DIR.concat("/").concat(fileModel.getNameFile())));
         } else {
             System.out.printf("Nenhuma ocorrência encontrada para o termo \"%s\".%n", searchTerm);
         }
@@ -155,7 +155,7 @@ public class FileService {
             resultSet.stream()
                     .map(fileModelMap::get)
                     .sorted(Comparator.comparing(FileModel::getNameFile))
-                    .forEach(fileModel -> completeResult.append(fileModel.getNameFile()).append("\n"));
+                    .forEach(fileModel -> completeResult.append(DATA_DIR.concat("/")).append(fileModel.getNameFile()).append("\n"));
 
             return completeResult.toString();  // Retorna a string final
         } else {
