@@ -1,5 +1,7 @@
 package org.luiza_labs.movies_search.services;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.luiza_labs.movies_search.models.FileModel;
 
 import java.io.File;
@@ -14,7 +16,9 @@ import java.util.Set;
 
 public class FileService {
 
-    private static final String DATA_DIR = "data/data";
+    @Getter
+    @Setter
+    private String DATA_DIR = "data/data";
     private final Map<Long, FileModel> fileModelMap = new HashMap<>();
     private final Map<String, Set<Long>> invertedIndex = new HashMap<>();  // Índice invertido
     private long idCounter = 1L;  // Controle do auto-incremento para ID dos arquivos

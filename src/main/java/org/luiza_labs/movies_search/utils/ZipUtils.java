@@ -9,7 +9,15 @@ import java.util.zip.ZipInputStream;
 
 public class ZipUtils {
 
-    public static void unzip(String zipFilePath, String destDir) {
+    private final String zipFilePath;
+    private final String destDir;
+
+    public ZipUtils(String zipFilePath, String destDir) {
+        this.zipFilePath = zipFilePath;
+        this.destDir = destDir;
+    }
+
+    public void unzip() {
         File dir = new File(destDir);
         if (!dir.exists()) dir.mkdirs();
 

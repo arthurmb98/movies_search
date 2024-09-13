@@ -1,6 +1,8 @@
 package org.luiza_labs.movies_search.controllers;
 
 import org.luiza_labs.movies_search.services.FileService;
+import org.luiza_labs.movies_search.utils.ZipUtils;
+
 import java.io.IOException;
 
 
@@ -24,8 +26,9 @@ public class MoviesController {
 
     public void loadZipFile(String zipFilePath, String destDir) throws IOException {
         // Chama o utilitário de descompactação (pode ser ZipUtils ou algo similar)
-        org.luiza_labs.movies_search.utils.ZipUtils.unzip(zipFilePath, destDir);
-
+        final ZipUtils zipUtilszipUtils = new ZipUtils(zipFilePath, destDir);
+        //Unzip arquivos
+        zipUtilszipUtils.unzip();
         // Carrega os arquivos do diretório descompactado no FileService
         fileService.initializeFileModelMap();
     }
