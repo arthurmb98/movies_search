@@ -40,7 +40,7 @@ public class MoviesSearchApp {
         if(args.length >= 1){
             // Reinicia o cronômetro
             startTime = System.nanoTime();
-            System.out.println("Procurando ocorrências com o termo: " + args[0]);
+            System.out.println("Procurando ocorrências com o termo: " + args[0] + "\n\n");
             // Realiza a busca com o termo de pesquisa fornecido
             controller.searchMovies(args[0]);
             // Para o cronômetro
