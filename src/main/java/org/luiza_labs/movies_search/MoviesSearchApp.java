@@ -1,6 +1,7 @@
 package org.luiza_labs.movies_search;
 
 import org.luiza_labs.movies_search.controllers.MoviesController;
+import org.luiza_labs.movies_search.views.MoviesView;
 
 import javax.swing.JOptionPane;
 import java.io.IOException;
@@ -22,6 +23,7 @@ public class MoviesSearchApp {
 
         // Instancia a Controller
         MoviesController controller = new MoviesController();
+        MoviesView moviesView = new MoviesView(controller);
 
         // Descompacta o arquivo e carrega os arquivos
         controller.loadZipFile(zipFilePath, destDir);
@@ -29,42 +31,26 @@ public class MoviesSearchApp {
         // Para o cronômetro
         long endTime = System.nanoTime();
 
-        System.out.println("Aplicação iniciada com sucesso!");
+        System.out.println("Aplicação iniciada com sucesso!\n");
 
         // Calcula o tempo total gasto
         long duration = endTime - startTime;
 
         System.out.println("Tempo de inicialização: " + duration / 1_000_000 + " ms\n");
 
+        // Caso o código esteja sendo rodado via prompt de comando.
         if(args.length >= 1){
             // Reinicia o cronômetro
             startTime = System.nanoTime();
             System.out.println("Procurando ocorrências com o termo: " + args[0]);
             // Realiza a busca com o termo de pesquisa fornecido
             controller.searchMovies(args[0]);
-
             // Para o cronômetro
             endTime = System.nanoTime();
             duration = endTime - startTime;
             System.out.println("\nTempo de execução da busca: " + duration / 1_000_000 + " ms");
         }else{
-            String nome = JOptionPane.showInputDialog("Forneça um termo para pesquisa:");
-            // Reinicia o cronômetro
-            startTime = System.nanoTime();
-            controller.searchMovies(nome);
-            // Verifica se um termo de pesquisa foi fornecido
-            if (nome.isEmpty()) {
-                System.out.println("Por favor, forneça um termo de pesquisa.");
-                return;
-            }
-            // Para o cronômetro
-            endTime = System.nanoTime();
-            duration = endTime - startTime;
-            System.out.println("Tempo de execução da busca: " + duration / 1_000_000 + " ms");
+                moviesView.showDialog();
         }
-
-
-
-
     }
 }

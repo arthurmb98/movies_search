@@ -17,6 +17,11 @@ public class MoviesController {
         fileService.searchInFiles(searchTerm);
     }
 
+    public String searchMoviesView(String searchTerm) throws IOException {
+        // Realiza a busca nos arquivos através do service
+        return fileService.searchInFilesView(searchTerm);
+    }
+
     public void loadZipFile(String zipFilePath, String destDir) throws IOException {
         // Chama o utilitário de descompactação (pode ser ZipUtils ou algo similar)
         org.luiza_labs.movies_search.utils.ZipUtils.unzip(zipFilePath, destDir);

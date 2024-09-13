@@ -1,20 +1,21 @@
 package org.luiza_labs.movies_search.services;
 
 import org.luiza_labs.movies_search.models.FileModel;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
-import java.util.stream.Stream;
 
 public class FileService {
 
     private static final String DATA_DIR = "data/data";
     private final Map<Long, FileModel> fileModelMap = new HashMap<>();
+    private final Map<String, Set<Long>> invertedIndex = new HashMap<>();  // Índice invertido
     private long idCounter = 1L;  // Controle do auto-incremento para ID dos arquivos
 
-    // Método para inicializar o HashMap de FileModels
+    // Método para inicializar o HashMap de FileModels e construir o índice invertido
     public void initializeFileModelMap() {
         if (fileModelMap.isEmpty()) {
             System.out.println("Iniciando o carregamento dos arquivos para a memória...");
@@ -25,7 +26,7 @@ public class FileService {
         }
     }
 
-    // Método para carregar os arquivos e colocar no HashMap
+    // Método para carregar os arquivos e construir o índice invertido
     private void loadFiles() {
         File dataFolder = new File(DATA_DIR);
         if (!dataFolder.exists() || !dataFolder.isDirectory()) {
@@ -37,13 +38,16 @@ public class FileService {
         if (files != null) {
             for (File file : files) {
                 if (file.isFile() && file.getName().endsWith(".txt")) {
-                    try (Stream<String> lines = Files.lines(Paths.get(file.getPath()))) {
-                        StringBuilder fileContent = new StringBuilder();
-                        lines.forEach(line -> fileContent.append(" ").append(line));
+                    try {
+                        // Ler a linha única do arquivo
+                        String content = new String(Files.readAllBytes(Paths.get(file.getPath()))).toLowerCase();
 
                         // Criar o FileModel e adicionar ao HashMap
-                        FileModel fileModel = new FileModel(idCounter++, file.getName(), fileContent.toString());
+                        FileModel fileModel = new FileModel(idCounter++, file.getName(), content);
                         fileModelMap.put(fileModel.getId(), fileModel);
+
+                        // Construir o índice invertido a partir do conteúdo do arquivo (apenas uma linha)
+                        buildInvertedIndex(fileModel);
 
                     } catch (IOException e) {
                         System.err.println("Error reading file " + file.getName() + ": " + e.getMessage());
@@ -53,7 +57,22 @@ public class FileService {
         }
     }
 
-    // Método para buscar os termos nos arquivos carregados
+    // Método para construir o índice invertido
+    private void buildInvertedIndex(FileModel fileModel) {
+        // Dividir o conteúdo do arquivo em palavras
+        String[] words = fileModel.getContentFile().split("\\W+");
+
+        // Para cada palavra, adicionar ao índice invertido
+        for (String word : words) {
+            if (!word.isEmpty()) {
+                invertedIndex
+                        .computeIfAbsent(word, k -> new HashSet<>())
+                        .add(fileModel.getId());
+            }
+        }
+    }
+
+    // Método para buscar termos nos arquivos usando o índice invertido
     public void searchInFiles(String searchTerm) {
         if (fileModelMap.isEmpty()) {
             System.out.println("No files loaded. Please load the files first.");
@@ -61,27 +80,79 @@ public class FileService {
         }
 
         String[] searchTerms = searchTerm.toLowerCase().split("\\s+");
-        List<FileModel> matchingFiles = new ArrayList<>();
-        int occurrenceCount = 0;
+        Set<Long> resultSet;
 
-        for (FileModel fileModel : fileModelMap.values()) {
-            boolean allTermsFound = Arrays.stream(searchTerms)
-                    .allMatch(term -> fileModel.getContentFile().toLowerCase().contains(term));
+        // Realizar a busca para o primeiro termo
+        if (invertedIndex.containsKey(searchTerms[0])) {
+            resultSet = new HashSet<>(invertedIndex.get(searchTerms[0]));
+        } else {
+            System.out.printf("Nenhuma ocorrência encontrada para o termo \"%s\".%n", searchTerm);
+            return;
+        }
 
-            if (allTermsFound) {
-                matchingFiles.add(fileModel);
-                occurrenceCount++;
+        // Refinar o resultado para outros termos
+        for (int i = 1; i < searchTerms.length; i++) {
+            String term = searchTerms[i];
+            if (invertedIndex.containsKey(term)) {
+                resultSet.retainAll(invertedIndex.get(term));
+            } else {
+                resultSet.clear();  // Se algum termo não for encontrado, o resultado é vazio
+                break;
             }
         }
 
-        // Ordenar os arquivos pelo nome
-        matchingFiles.sort(Comparator.comparing(FileModel::getNameFile));
-
-        // Imprimir resultados
-        System.out.printf("Foram encontradas %d ocorrências pelo termo \"%s\".%n", occurrenceCount, searchTerm);
-        if (occurrenceCount > 0) {
-            System.out.println("Os arquivos que possuem \"" + searchTerm + "\" são:");
-            matchingFiles.forEach(fileModel -> System.out.println(fileModel.getNameFile()));
+        // Exibir os arquivos que contêm todos os termos
+        if (!resultSet.isEmpty()) {
+            System.out.printf("Os arquivos que possuem \"%s\" são:%n", searchTerm);
+            resultSet.stream()
+                    .map(fileModelMap::get)
+                    .sorted(Comparator.comparing(FileModel::getNameFile))
+                    .forEach(fileModel -> System.out.println(fileModel.getNameFile()));
+        } else {
+            System.out.printf("Nenhuma ocorrência encontrada para o termo \"%s\".%n", searchTerm);
         }
+    }
+
+    // Método para buscar termos nos arquivos usando o índice invertido para view
+    public String searchInFilesView(String searchTerm) {
+        if (fileModelMap.isEmpty()) {
+            return "No files loaded. Please load the files first.";
+        }
+
+        String[] searchTerms = searchTerm.toLowerCase().split("\\s+");
+        Set<Long> resultSet;
+
+        // Realizar a busca para o primeiro termo
+        if (invertedIndex.containsKey(searchTerms[0])) {
+            resultSet = new HashSet<>(invertedIndex.get(searchTerms[0]));
+        } else {
+            return "Nenhuma ocorrência encontrada para o termo " + searchTerm  + "\n";
+        }
+
+        // Refinar o resultado para outros termos
+        for (int i = 1; i < searchTerms.length; i++) {
+            String term = searchTerms[i];
+            if (invertedIndex.containsKey(term)) {
+                resultSet.retainAll(invertedIndex.get(term));
+            } else {
+                resultSet.clear();  // Se algum termo não for encontrado, o resultado é vazio
+                break;
+            }
+        }
+
+        // Exibir os arquivos que contêm todos os termos
+        if (!resultSet.isEmpty()) {
+            StringBuilder completeResult = new StringBuilder("Os arquivos que possuem \"" + searchTerm + "\" são:\n");
+
+            resultSet.stream()
+                    .map(fileModelMap::get)
+                    .sorted(Comparator.comparing(FileModel::getNameFile))
+                    .forEach(fileModel -> completeResult.append(fileModel.getNameFile()).append("\n"));
+
+            return completeResult.toString();  // Retorna a string final
+        } else {
+            return "Nenhuma ocorrência encontrada para o termo \"" + searchTerm + "\".\n";
+        }
+
     }
 }
