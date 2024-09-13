@@ -49,6 +49,7 @@ public class MoviesSearchApp {
             System.out.println("\nTempo de execução da busca: " + duration / 1_000_000 + " ms");
         }else{
             MoviesView moviesView = new MoviesView(controller);
+            moviesView.showDialog();
         }
     }
 }
