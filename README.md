@@ -73,6 +73,7 @@ Para executar os testes, use o comando Maven:
 ## Problemas Conhecidos
 
 Problema com a configuração do PrintStream: Se você encontrar problemas relacionados ao encoding dos caracteres, verifique se o seu terminal ou IDE está configurado para usar UTF-8.
+###### É válido ressaltar que este problema só acontece caso seja compilado pelo próprio console via ' compile.bat'.
 
 ## Licença
 
