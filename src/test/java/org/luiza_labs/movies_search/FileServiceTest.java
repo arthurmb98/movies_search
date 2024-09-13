@@ -1,11 +1,13 @@
 package org.luiza_labs.movies_search;
 
 import org.junit.jupiter.api.Test;
+import org.luiza_labs.movies_search.services.FileService;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 
-public class FileSearchServiceTest {
+public class FileServiceTest {
 
     @Test
     public void testSearchInFiles() throws IOException {
@@ -18,7 +20,7 @@ public class FileSearchServiceTest {
         Files.write(file2.toPath(), "Another test file.".getBytes());
 
         // Initialize the FileSearchService
-        FileSearchService service = new FileSearchService();
+        FileService service = new FileService();
 
         // Run the search
         service.searchInFiles("test");

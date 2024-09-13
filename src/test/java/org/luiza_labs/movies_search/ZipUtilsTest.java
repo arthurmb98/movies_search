@@ -2,6 +2,7 @@ package org.luiza_labs.movies_search;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
+import org.luiza_labs.movies_search.utils.ZipUtils;
 
 import java.io.File;
 import java.io.FileOutputStream;

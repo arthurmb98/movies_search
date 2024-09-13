@@ -35,7 +35,7 @@ Para compilar o projeto, execute o seguinte comando no terminal:
 Para executar o programa, use o comando:
 
 ```sh
-    java -cp target/classes org.luiza_labs.movies_search.MoviesSearchApp "nome_filtro"
+    java -cp target/classes org.luiza_labs.movies_search.MoviesSearchApp "john"
 ```
 
 ## Testes

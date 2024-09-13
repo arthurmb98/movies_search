@@ -1,4 +1,4 @@
-package org.luiza_labs.movies_search;
+package org.luiza_labs.movies_search.utils;
 
 import java.io.File;
 import java.io.FileInputStream;
