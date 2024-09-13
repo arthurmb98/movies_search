@@ -48,7 +48,7 @@ public class FilesView {
         }
     }
 
-    private void showResult(String texto) {
+    public void showResult(String texto) {
         // Criar um JTextArea
         JTextArea textArea = new JTextArea(10, 30);
         // Adicionar itens na JTextArea
