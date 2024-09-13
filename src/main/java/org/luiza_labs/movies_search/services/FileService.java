@@ -16,11 +16,11 @@ import java.util.Set;
 
 public class FileService {
 
+    private final Map<Long, FileModel> fileModelMap = new HashMap<>();
+    private final Map<String, Set<Long>> invertedIndex = new HashMap<>();  // Índice invertido
     @Getter
     @Setter
     private String DATA_DIR = "data/data";
-    private final Map<Long, FileModel> fileModelMap = new HashMap<>();
-    private final Map<String, Set<Long>> invertedIndex = new HashMap<>();  // Índice invertido
     private long idCounter = 1L;  // Controle do auto-incremento para ID dos arquivos
 
     // Método para inicializar o HashMap de FileModels e construir o índice invertido
@@ -111,7 +111,7 @@ public class FileService {
 
         // Exibir os arquivos que contêm todos os termos
         if (!resultSet.isEmpty()) {
-            System.out.printf("Os arquivos que possuem \"%s\" são:%n", searchTerm);
+            System.out.printf("Os " + resultSet.size() + " arquivos que possuem \"" + searchTerm + "\" são:\n", searchTerm);
             resultSet.stream()
                     .map(fileModelMap::get)
                     .sorted(Comparator.comparing(FileModel::getNameFile))
@@ -134,7 +134,7 @@ public class FileService {
         if (invertedIndex.containsKey(searchTerms[0])) {
             resultSet = new HashSet<>(invertedIndex.get(searchTerms[0]));
         } else {
-            return "Nenhuma ocorrência encontrada para o termo " + searchTerm  + "\n";
+            return "Nenhuma ocorrência encontrada para o termo " + searchTerm + "\n";
         }
 
         // Refinar o resultado para outros termos
@@ -150,7 +150,7 @@ public class FileService {
 
         // Exibir os arquivos que contêm todos os termos
         if (!resultSet.isEmpty()) {
-            StringBuilder completeResult = new StringBuilder("Os arquivos que possuem \"" + searchTerm + "\" são:\n");
+            StringBuilder completeResult = new StringBuilder("Os " + resultSet.size() + " arquivos que possuem \"" + searchTerm + "\" são:\n");
 
             resultSet.stream()
                     .map(fileModelMap::get)
