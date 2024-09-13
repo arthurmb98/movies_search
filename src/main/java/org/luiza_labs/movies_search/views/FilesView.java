@@ -1,17 +1,17 @@
 package org.luiza_labs.movies_search.views;
 
-import org.luiza_labs.movies_search.controllers.MoviesController;
+import org.luiza_labs.movies_search.controllers.FilesController;
 
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import java.io.IOException;
 
-public class MoviesView {
-    private final MoviesController moviesController;
+public class FilesView {
+    private final FilesController filesController;
 
-    public MoviesView(MoviesController moviesController) {
-        this.moviesController = moviesController;
+    public FilesView(FilesController filesController) {
+        this.filesController = filesController;
     }
 
     public void showDialog() throws IOException {
@@ -29,7 +29,7 @@ public class MoviesView {
 
             System.out.println("Procurando ocorrências com o termo: " + nome);
             long startTime = System.nanoTime();
-            String movies = this.moviesController.searchMoviesView(nome);
+            String movies = this.filesController.searchMoviesView(nome);
             // Para o cronômetro
             long endTime = System.nanoTime();
             long duration = endTime - startTime;

@@ -6,11 +6,11 @@ import org.luiza_labs.movies_search.utils.ZipUtils;
 import java.io.IOException;
 
 
-public class MoviesController {
+public class FilesController {
     // Queria usar @Autowired, mas quis evitar dependencia ;)
     private final FileService fileService;
 
-    public MoviesController() {
+    public FilesController() {
         this.fileService = new FileService();
     }
 

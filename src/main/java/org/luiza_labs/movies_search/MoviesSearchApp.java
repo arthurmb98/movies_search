@@ -1,7 +1,7 @@
 package org.luiza_labs.movies_search;
 
-import org.luiza_labs.movies_search.controllers.MoviesController;
-import org.luiza_labs.movies_search.views.MoviesView;
+import org.luiza_labs.movies_search.controllers.FilesController;
+import org.luiza_labs.movies_search.views.FilesView;
 
 import java.io.IOException;
 import java.io.PrintStream;
@@ -21,7 +21,7 @@ public class MoviesSearchApp {
         String destDir = "data";  // Diretório onde os arquivos serão descompactados
 
         // Instancia a Controller
-        MoviesController controller = new MoviesController();
+        FilesController controller = new FilesController();
 
         // Descompacta o arquivo e carrega os arquivos
         controller.loadZipFile(zipFilePath, destDir);
@@ -48,8 +48,8 @@ public class MoviesSearchApp {
             duration = endTime - startTime;
             System.out.println("\nTempo de execução da busca: " + duration / 1_000_000 + " ms");
         }else{
-            MoviesView moviesView = new MoviesView(controller);
-            moviesView.showDialog();
+            FilesView filesView = new FilesView(controller);
+            filesView.showDialog();
         }
     }
 }
