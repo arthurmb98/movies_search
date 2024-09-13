@@ -24,23 +24,42 @@ Foi optado em não gerar um 'jar' do projeto, para que em tempo de execução se
 
 ## Compilação
 
-Para compilar o projeto, execute o seguinte comando no terminal:
+### Existem duas formas de compilar, via comando javac ou pelo Maven:
+
+Para compilar o projeto (via javac), execute o seguinte comando no terminal:
 
 ```sh
     javac -d target/classes src/main/java/org/luiza_labs/movies_search/*.java
 ```
 
+Para compilar e executar testes pelo maven, execute o seguinte comando no terminal:
+
+```sh
+    mvn clean install
+```
+
 ## Execução
 
-Para executar o programa, use o comando:
+### Existem duas formas de executar a plicação:
+
+Para executar o programa pelo prompt de o comando java:
+###### Lembre-se do tempo no fim do comando.
 
 ```sh
     java -cp target/classes org.luiza_labs.movies_search.MoviesSearchApp "john"
 ```
 
+Para executar o programa via Maven:
+
+```sh
+    mvn run
+```
+
+###### Após subir a aplicação pelo Maven, uma tela de pesquisa aparecerá para o usuário informar o termo.
+
 ## Testes
 
-Para executar os testes (se configurados), use o comando Maven:
+Para executar os testes, use o comando Maven:
 
 ```sh
     mvn test
