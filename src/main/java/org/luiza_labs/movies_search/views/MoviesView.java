@@ -2,7 +2,9 @@ package org.luiza_labs.movies_search.views;
 
 import org.luiza_labs.movies_search.controllers.MoviesController;
 
-import javax.swing.*;
+import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import java.io.IOException;
 
 public class MoviesView {
