@@ -1,9 +1,10 @@
-package org.luiza_labs.movies_search.utils;
+package org.luiza_labs.movies_search;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.luiza_labs.movies_search.utils.ZipUtils;
 
 import java.io.File;
 import java.io.FileOutputStream;

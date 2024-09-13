@@ -29,7 +29,7 @@ public class MoviesView {
 
             System.out.println("Procurando ocorrências com o termo: " + nome);
             long startTime = System.nanoTime();
-            String movies = moviesController.searchMoviesView(nome);
+            String movies = this.moviesController.searchMoviesView(nome);
             // Para o cronômetro
             long endTime = System.nanoTime();
             long duration = endTime - startTime;
@@ -63,4 +63,5 @@ public class MoviesView {
         // Exibir o JOptionPane com o JScrollPane
         JOptionPane.showMessageDialog(null, scrollPane, "Lista de Itens", JOptionPane.PLAIN_MESSAGE);
     }
+
 }

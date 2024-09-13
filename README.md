@@ -18,44 +18,49 @@ Foi optado em não gerar um 'jar' do projeto, para que em tempo de execução se
 
 - `src/main/java/org/luiza_labs/movies_search/`: Contém o código-fonte Java.
     - `MoviesSearchApp.java`: Classe principal da aplicação.
-    - `FileSearchService.java`: Serviço que realiza a busca em arquivos.
-    - `ZipUtils.java`: Utilitário para descompactar arquivos ZIP.
+      - `controllers/MoviesController.java`: Controlador responsável pela lógica de controle da aplicação. Gerencia a interação entre a aplicação e os dados, incluindo a carga de arquivos ZIP e a busca de filmes.
+      - `views/MoviesView.java`: Visão responsável pela interface com o usuário. Exibe os resultados da busca e outras informações relevantes para o usuário.
+      - `services/FileService.java`: Serviço que realiza a busca em arquivos. Implementa a lógica para procurar filmes em arquivos descompactados.
+      - `utils/ZipUtils.java`: Utilitário para descompactar arquivos ZIP.
 - `target/classes/`: Diretório de saída para arquivos compilados.
 
 ## Compilação
 
 ### Existem duas formas de compilar, via comando javac ou pelo Maven:
 
-Para compilar o projeto (via javac), execute o seguinte comando no terminal:
+Para compilar e executar o projeto via prompt de comando, execute a seguinte linha:
 
 ```sh
-    javac -d target/classes src/main/java/org/luiza_labs/movies_search/*.java
+    compile.bat
 ```
+###### Foi criado um arquivo bat para setar os diretórios que devem ser compilados.
 
-Para compilar e executar testes pelo maven, execute o seguinte comando no terminal:
+Pode-se também compilar e já executar os testes pelo Maven, basta executar o seguinte comando no terminal:
 
 ```sh
     mvn clean install
 ```
+Certifique-se de que o Maven está instalado e configurado no seu ambiente para executar este comando.
 
 ## Execução
 
 ### Existem duas formas de executar a plicação:
 
 Para executar o programa pelo prompt de o comando java:
-###### Lembre-se do tempo no fim do comando.
+###### Essa execução só funciona caso o projeto tenha sido compilado pelo comando 'compile.bat'
+###### Lembre-se do termo a ser procurado no fim do comando.
 
 ```sh
     java -cp target/classes org.luiza_labs.movies_search.MoviesSearchApp "john"
 ```
 
-Para executar o programa via Maven:
+Para executar o programa via Maven (Maneira mais fácil):
 
 ```sh
     mvn run
 ```
 
-###### Após subir a aplicação pelo Maven, uma tela de pesquisa aparecerá para o usuário informar o termo.
+###### Após subir a aplicação pelo Maven, uma tela de pesquisa aparecerá para o usuário informar o termo. Após mostrar os resultados, o usuário pode procuraar por outro termo ou encerrar a aplicação.
 
 ## Testes
 
@@ -64,7 +69,6 @@ Para executar os testes, use o comando Maven:
 ```sh
     mvn test
 ```
-Certifique-se de que o Maven está instalado e configurado no seu ambiente para executar este comando.
 
 ## Problemas Conhecidos
 

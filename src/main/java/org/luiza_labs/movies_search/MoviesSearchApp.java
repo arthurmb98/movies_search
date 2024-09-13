@@ -3,7 +3,6 @@ package org.luiza_labs.movies_search;
 import org.luiza_labs.movies_search.controllers.MoviesController;
 import org.luiza_labs.movies_search.views.MoviesView;
 
-import javax.swing.JOptionPane;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
@@ -23,7 +22,6 @@ public class MoviesSearchApp {
 
         // Instancia a Controller
         MoviesController controller = new MoviesController();
-        MoviesView moviesView = new MoviesView(controller);
 
         // Descompacta o arquivo e carrega os arquivos
         controller.loadZipFile(zipFilePath, destDir);
@@ -50,7 +48,7 @@ public class MoviesSearchApp {
             duration = endTime - startTime;
             System.out.println("\nTempo de execução da busca: " + duration / 1_000_000 + " ms");
         }else{
-                moviesView.showDialog();
+            MoviesView moviesView = new MoviesView(controller);
         }
     }
 }
