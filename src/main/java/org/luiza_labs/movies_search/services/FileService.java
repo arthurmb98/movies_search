@@ -111,7 +111,7 @@ public class FileService {
 
         // Exibir os arquivos que contêm todos os termos
         if (!resultSet.isEmpty()) {
-            System.out.printf("Os " + resultSet.size() + " arquivos que possuem \"" + searchTerm + "\" são:\n", searchTerm);
+            System.out.printf("Os " + resultSet.size() + " arquivos que possuem \"" + searchTerm + "\" são:\n\n", searchTerm);
             resultSet.stream()
                     .map(fileModelMap::get)
                     .sorted(Comparator.comparing(FileModel::getNameFile))
@@ -150,7 +150,7 @@ public class FileService {
 
         // Exibir os arquivos que contêm todos os termos
         if (!resultSet.isEmpty()) {
-            StringBuilder completeResult = new StringBuilder("Os " + resultSet.size() + " arquivos que possuem \"" + searchTerm + "\" são:\n");
+            StringBuilder completeResult = new StringBuilder("Os " + resultSet.size() + " arquivos que possuem \"" + searchTerm + "\" são:\n\n");
 
             resultSet.stream()
                     .map(fileModelMap::get)
